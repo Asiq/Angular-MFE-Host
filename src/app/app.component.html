@@ -1,39 +1,26 @@
-<!-- <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <a class="navbar-brand" href="#">
-    <img
-      src="https://angular.io/assets/images/logos/angular/angular.svg"
-      width="30"
-      height="30"
-    />
-  </a>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<div class="container mt-2">
-  <div class="row">
-    <div class="jumbotron">
-      Welcome to the Angular Microfrontend demo using Webpack 5 Module
-      federation This component is part of the shell application, the remote
-      components (customer, order, product, tracking) are remotely loaded into
-      the application, check the network settings to see these remotes being
-      loaded.
-    </div>
+<mat-toolbar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="drawer.toggle()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+</mat-toolbar>
 
-    <div class="jumbotron col-12">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div> -->
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <mat-list role="list">
+      <mat-list-item role="listitem" routerLink="/analytics"
+        >Analytics
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
 
-{{ title }}
-<ul>
-  <li><a routerLink="/home"> Remote App </a></li>
-  <li><a routerLink="/login">Login </a></li>
-  <li><a routerLink="/analytics">Analytics </a></li>
-</ul>
-<router-outlet></router-outlet>
+  <div class="example-sidenav-content" (click)="drawer.toggle()">
+    <router-outlet />
+  </div>
+</mat-drawer-container>
