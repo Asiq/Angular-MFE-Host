@@ -1,6 +1,50 @@
 # MicrofrontendHost
 
+## Webpack Module Federation used in this Repo to run as Host Application.
+
+By Using ModuleFederation Plugin to configure the microfrontend remote application which should be called as on demand in the browser as lazy -loaded.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+
+Step 1: Create the Host Application (Dashboard Shell App)
+ng new microfrontend_host --routing
+
+Step 2 :
+cd microfrontend_host
+ng add @angular-architects/module-federation
+
+Step 3: Configure the Host
+Modify webpack.config.js in the microfrontend_host:
+
+module.exports = withModuleFederationPlugin({
+remotes: {
+remoteApp: "remoteApp@http://localhost:4201/remoteEntry.js",
+},
+shared: {
+...shareAll({ singleton: true, strictVersion: false, requiredVersion: 'auto' }),
+},
+});
+
+Step 4: Modify the Host Application to Use Lazy Loading
+Update app.routes.ts in microfrontend_host
+Create a routing configuration that dynamically loads the remote component.
+
+export const routes: Routes = [
+
+{
+path: 'analytics',
+loadComponent: () =>
+loadRemoteModule({
+type: 'module',
+remoteEntry: 'http://localhost:4300/remoteEntry.js',
+exposedModule: './UserAnalyticsComponent',
+})
+.then((m) => m.UserAnalyticsComponent)
+.catch((err) => console.log(err)),
+},
+];
+
+Step 5 : Run the Application
 
 ## Development server
 
